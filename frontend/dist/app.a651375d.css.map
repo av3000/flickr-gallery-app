@@ -1,0 +1,1 @@
+{"version":3,"sources":["src/scss/app.scss"],"names":[],"mappings":"AAAA;EACI;EACA;;AACA;EACI","file":"app.a651375d.css","sourceRoot":"..","sourcesContent":[".loading-element {\n    margin: 0 auto;\n    display: none;\n    &.loading {\n        display: block;\n    }\n}"]}

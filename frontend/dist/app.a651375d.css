@@ -1,0 +1,9 @@
+.loading-element {
+  margin: 0 auto;
+  display: none;
+}
+.loading-element.loading {
+  display: block;
+}
+
+/*# sourceMappingURL=/app.a651375d.css.map */

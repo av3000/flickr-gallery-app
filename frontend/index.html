@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/scss/app.scss">
+    <title>Image Gallery</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <h3>
+                Gallery | the Imagery
+            </h3>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <div class="container">
+                <div id="images-app"></div>
+                <div id="load-more">
+                    <button>More</button>
+                </div>
+                <div class="loading-element">
+                    <img src="src/img/spinner.gif" alt="spinner">
+                  </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <section>
+            <p>
+                Powered by <a href="https://www.flickr.com/services/api/">flickr API</a>.
+            </p>
+        </section>
+    </footer>
+    <script src="src/app.js"> </script>
+</body>
+</html>

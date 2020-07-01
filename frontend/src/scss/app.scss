@@ -1,0 +1,7 @@
+.loading-element {
+    margin: 0 auto;
+    display: none;
+    &.loading {
+        display: block;
+    }
+}

@@ -42,7 +42,7 @@ app.get("/api/photos", async function(req, res) {
                     id: res.id,
                     safety_level: res.safety_level,
                     visibility: res.visibility,
-                    title: res.title,
+                    title: res.title._content ? res.title._content : "Untitled",
                     urls: res.urls,
                     description: res.description,
                     secret: res.secret,
@@ -56,7 +56,7 @@ app.get("/api/photos", async function(req, res) {
                 page, pages, perpage, total, photos
             });
          })
-         .catch(err => console.log(err))
+         .catch(err => console.log(err.error))
         
     } catch(error) {
         error.message = "Not found";
@@ -84,7 +84,6 @@ app.post("/api/photos/search", async function(req, res, next) {
         const results = await flickrClient.photos.search({
             text: req.body.keyword
         });
-        console.log(results);
         let { page, pages, perpage, total, photo } = results.body.photos;
         let photos = photo;
 

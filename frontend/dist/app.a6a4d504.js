@@ -126,10 +126,18 @@ Object.defineProperty(exports, "__esModule", {
 exports.ImageItem = void 0;
 
 var ImageItem = function ImageItem(title, url) {
-  return "\n<div class=\"card\">\n  <div class=\"card-body\">\n  <h4 class=\"card-title\">".concat(title, "</h4>\n  <img  src=\"").concat(url, "\"/>\n  </div>\n</div>\n");
+  return "\n<div class=\"image-card\">\n  <h5 class=\"card-title\">".concat(title, "</h5>\n  <img src=\"").concat(url, "\"/>\n</div>\n");
 };
 
 exports.ImageItem = ImageItem;
+{
+  /* <div class="card">
+   <div class="card-body">
+   <h4 class="card-title">${title}</h4>
+   <img src="${url}"/>
+   </div>
+  </div> */
+}
 },{}],"src/ImagesList.js":[function(require,module,exports) {
 "use strict";
 
@@ -164,11 +172,10 @@ var ImagesList = /*#__PURE__*/function () {
 
       this.fetchImages().then(function (res) {
         return res.photos.map(function (image) {
-          console.log("title: " + image.title._content);
-          console.log("visibility: ", image.visibility);
-          console.log("safety:" + image.safety_level);
+          console.log("title: " + image.title);
           var url = 'http://farm' + image.farm + '.staticflickr.com/' + image.server + '/' + image.id + '_' + image.secret + '.jpg';
-          return (0, _ImageItem.ImageItem)(image.title._content, url);
+          console.log("url: " + url);
+          return (0, _ImageItem.ImageItem)(image.title, url);
         }).join('');
       }).then(function (images) {
         _this.imagesBlock.innerHTML = images;
@@ -250,7 +257,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44903" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42989" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

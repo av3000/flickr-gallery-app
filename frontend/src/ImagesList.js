@@ -13,16 +13,17 @@ export class ImagesList {
         this.fetchImages().then(res => {
             return res.photos
                     .map(image => {
-                        console.log("title: "+image.title._content);
-                        console.log("visibility: ", image.visibility);
-                        console.log("safety:"+image.safety_level);
+                        console.log("title: " + image.title);
                         let url = 
                             'http://farm'
                             +image.farm+
                             '.staticflickr.com/'
                             +image.server+'/'+
                             image.id+'_'+image.secret+'.jpg';
-                        return ImageItem(image.title._content, url)
+
+                        console.log("url: " + url);
+
+                        return ImageItem(image.title, url)
                     })
                     .join('')
         })

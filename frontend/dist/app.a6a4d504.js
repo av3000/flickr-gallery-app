@@ -156,48 +156,106 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var ImagesList = /*#__PURE__*/function () {
   function ImagesList(imagesBlockSelector, loadMoreBtnSelector, loadingElementSelector) {
+    var _this = this;
+
     _classCallCheck(this, ImagesList);
 
     this.imagesBlock = document.querySelector(imagesBlockSelector);
     this.loadMoreBtn = document.querySelector(loadMoreBtnSelector);
     this.loadingElement = document.querySelector(loadingElementSelector);
+    this.url = 'http://localhost:8081/api/photos?';
     this.appContext = {};
+    this.appContext.page = 1;
+    this.appContext.perpage = 10;
+    this.appContext.keyword = "";
+    this.appContext.photos = [];
     this.startLoading();
+    window.addEventListener('scroll', function () {
+      var _document$documentEle = document.documentElement,
+          scrollTop = _document$documentEle.scrollTop,
+          scrollHeight = _document$documentEle.scrollHeight,
+          clientHeight = _document$documentEle.clientHeight;
+
+      if (clientHeight + scrollTop >= scrollHeight - 5) {
+        _this.loadMore(_this.appContext.page, _this.appContext.perpage).then(function (res) {
+          return _this.generatePhotosToDom(res.photos);
+        }).then(function (images) {
+          _this.imagesBlock.innerHTML += images;
+
+          _this.stopLoading();
+        }).catch(function (error) {
+          console.log(error);
+
+          _this.stopLoading();
+        });
+      }
+    });
   }
 
   _createClass(ImagesList, [{
+    key: "generatePhotosToDom",
+    value: function generatePhotosToDom(photos) {
+      return photos.map(function (image) {
+        var url = 'http://farm' + image.farm + '.staticflickr.com/' + image.server + '/' + image.id + '_' + image.secret + '.jpg';
+        return (0, _ImageItem.ImageItem)(image.title, url);
+      }).join('');
+    }
+  }, {
+    key: "loadMore",
+    value: function loadMore(page, perpage) {
+      var _this2 = this;
+
+      var params = {
+        page: page,
+        perpage: perpage
+      };
+      var urlParams = new URLSearchParams(Object.entries(params));
+      this.startLoading();
+      return new Promise(function (resolve, reject) {
+        return fetch(_this2.url + urlParams).then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          //  this.appContext = res;
+          _this2.appContext.photos += res.photos;
+          _this2.appContext.page = res.page;
+          _this2.appContext.perpage = res.perpage;
+          return resolve(res);
+        }).catch(function (error) {
+          console.log(error);
+          return reject();
+        });
+      });
+    }
+  }, {
     key: "appInit",
     value: function appInit() {
-      var _this = this;
+      var _this3 = this;
 
-      this.fetchImages().then(function (res) {
-        return res.photos.map(function (image) {
-          console.log("title: " + image.title);
-          var url = 'http://farm' + image.farm + '.staticflickr.com/' + image.server + '/' + image.id + '_' + image.secret + '.jpg';
-          console.log("url: " + url);
-          return (0, _ImageItem.ImageItem)(image.title, url);
-        }).join('');
+      this.fetchImages(this.appContext.page, this.appContext.perpage).then(function (res) {
+        return _this3.generatePhotosToDom(res.photos);
       }).then(function (images) {
-        _this.imagesBlock.innerHTML = images;
+        _this3.imagesBlock.innerHTML = images;
 
-        _this.stopLoading();
+        _this3.stopLoading();
       }).catch(function (error) {
         console.log(error);
       });
     }
   }, {
     key: "fetchImages",
-    value: function fetchImages() {
-      var _this2 = this;
+    value: function fetchImages(page, perpage) {
+      var _this4 = this;
 
-      console.log("getImages");
+      var params = {
+        page: page,
+        perpage: perpage
+      };
+      var urlParams = new URLSearchParams(Object.entries(params));
       return new Promise(function (resolve, reject) {
-        return fetch("http://localhost:8081/api/photos", {
-          method: 'GET'
-        }).then(function (res) {
+        return fetch(_this4.url + urlParams).then(function (res) {
           return res.json();
         }).then(function (res) {
-          _this2.appContext = res;
+          _this4.appContext = res;
           return resolve(res);
         }).catch(function (error) {
           console.log(error);
@@ -257,7 +315,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42989" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38481" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

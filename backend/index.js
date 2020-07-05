@@ -14,8 +14,11 @@ app.use(bodyParser.json());
 
 app.get("/api/photos", async function(req, res) {
     try {
-        const results = await flickrClient.photos.getRecent()
-        
+        const results = await flickrClient.photos.getRecent({
+            page: req.query.page,
+            per_page: req.query.perpage
+        })
+
         let { page, pages, perpage, total, photo } = results.body.photos;
         let allPhotos = photo
 
@@ -52,6 +55,8 @@ app.get("/api/photos", async function(req, res) {
             })
          })
          .then(() => {
+             console.log("photos-length")
+             console.log(photos.length);
             return res.status(200).json({
                 page, pages, perpage, total, photos
             });

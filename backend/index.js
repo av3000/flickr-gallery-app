@@ -55,8 +55,6 @@ app.get("/api/photos", async function(req, res) {
             })
          })
          .then(() => {
-             console.log("photos-length")
-             console.log(photos.length);
             return res.status(200).json({
                 page, pages, perpage, total, photos
             });
@@ -102,5 +100,5 @@ app.post("/api/photos/search", async function(req, res, next) {
 
 
 app.listen(PORT, function() {
-    console.log(`Server is starting on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

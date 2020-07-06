@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  gallery-frontend:
+    build: frontend
+    ports:
+      - "1234:1234"
+
+  gallery-backend:
+    build: backend
+    ports:
+      - "8081:8081"

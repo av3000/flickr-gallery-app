@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./node_modules/parcel/bin/cli index.html",
+    "start": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "proxy": "http://localhost:8081",
@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "parcel": "^1.12.4"
+    "parcel": "^2.0.0"
   },
   "devDependencies": {
     "sass": "^1.26.9"

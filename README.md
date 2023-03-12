@@ -21,14 +21,16 @@ _Its important to install the latest version of Node_
 
 Make sure you have [docker](https://docs.docker.com/install/) and [docker-compose](https://docs.docker.com/compose/install/) installed on you machine.
 
-````bash
+```bash
 # all you need is run to automatically build containers with needed libraries/modules and settings
 docker-compose up --build
+```
 
 # depending on your setup you may need to use sudo
+
 ```bash
 sudo docker-compose up
-````
+```
 
 Thats it, the node api is visible at port 8081 - [http://localhost:8081](http://localhost:8081)
 and the javascript app is visible at port 1234 - [http://localhost:1234](http://localhost:1234)
